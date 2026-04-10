@@ -103,7 +103,7 @@ Foi criada uma camada de serviço (`api.ts`) com delay artificial para simular c
 
 * Implementação de WebSocket para atualização em tempo real
 * Paginação e ordenação da tabela
-* Testes automatizados com Jest e React Testing Library
+* Otimizar as requisições com paginação no backend (lazy loading), evitando o carregamento de grandes volumes de dados (ex: 100 registros)
 * Integração com API real
 * Validação mais robusta no fluxo de decisão
 

@@ -6,8 +6,17 @@ import { Proposal } from "@/types/proposal";
 import { StatusBadge } from "./StatusBadge";
 import { useRouter } from "next/navigation";
 
+const STATUS_OPTIONS = [
+  { value: 'all', label: 'Todos os Status' },
+  { value: 'PENDING', label: 'Aguardando' },
+  { value: 'SIGNED', label: 'Assinado' },
+  { value: 'REJECTED', label: 'Recusado' },
+  { value: 'EXPIRED', label: 'Expirado' },
+];
+
 export function ProposalTable() {
     const [data, setData] = useState<Proposal[]>([]);
+    const [filterStatus, setFilterStatus] = useState('all');
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(true);
     const router = useRouter();
@@ -19,10 +28,15 @@ export function ProposalTable() {
         });
     }, []);
 
-    const filteredData = data.filter((p) =>
-        p.clientName.toLowerCase().includes(search.toLowerCase()) ||
-        p.id.includes(search)
-    );
+    const filteredData = data.filter((p) => {
+        const matchesSearch = 
+            p.clientName.toLowerCase().includes(search.toLowerCase()) ||
+            p.id.toLowerCase().includes(search.toLowerCase());
+        
+        const matchesStatus = filterStatus === 'all' || p.status === filterStatus;
+
+        return matchesSearch && matchesStatus;
+    });
 
     return (
         <div>
@@ -33,6 +47,15 @@ export function ProposalTable() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
             />
+            <select 
+              className="border p-2 rounded-lg"
+              value={filterStatus}
+              onChange={(e) => setFilterStatus(e.target.value)}
+            >
+              {STATUS_OPTIONS.map(opt => (
+                <option key={opt.value} value={opt.value}>{opt.label}</option>
+              ))}
+            </select>
             <table className="w-full border mt-4">
                 <thead>
                     <tr className="bg-gray-100 text-left">

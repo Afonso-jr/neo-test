@@ -6,6 +6,8 @@ import { api } from "@/services/api";
 import { Proposal } from "@/types/proposal";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
+import Link from "next/link";
+import Loading from '@/components/Loading'
 
 export default function DossierPage() {
   const params = useParams();
@@ -24,18 +26,35 @@ export default function DossierPage() {
   }, [id]);
 
   if (loading) {
-    return <p className="p-6">Carregando dossiê...</p>;
+    return <Loading isLoading={true} />;
   }
 
   if (!proposal) {
-    return <p className="p-6">Proposta não encontrada</p>;
+    return (
+      <div className="flex flex-col justify-center items-center mt-20">
+        <p className="text-4xl p-6">Proposta não encontrada para o ID: {id}!</p>
+        <p className="text-2xl p-6">Verifique o ID do cliente ou solicite ajuda tecnica.</p>
+        <Link 
+          href="/dashboard" 
+          className="text-blue-600 hover:text-blue-800 transition-colors w-fit"
+        >
+          <span>Voltar para tabela de assinaturas</span>
+        </Link>
+      </div>
+    )
   }
 
   return (
     <div className="p-6 space-y-6">
-      <h1 className="text-2xl font-bold">Dossiê da Proposta</h1>
-  
-      {/* 📌 Seção 1 */}
+      <div className="flex items-center flex-col">
+        <h1 className="text-4xl font-bold">Dossiê da Proposta</h1>
+        <Link 
+          href="/dashboard" 
+          className="text-white hover:text-white-400 transition-colors w-fit"
+        >
+          <span>Voltar</span>
+        </Link>
+      </div>
       <div className="border p-4 rounded">
         <h2 className="font-semibold mb-3">Dados do Assinante</h2>
   
@@ -56,21 +75,16 @@ export default function DossierPage() {
             <strong>IP:</strong> {proposal.ip || "Não informado"}
           </div>
         </div>
-  
-        {/* 🗺️ Mapa */}
-        <div className="mt-4">
+          <div className="mt-4">
           <iframe
             src={`https://maps.google.com/maps?q=${proposal.latitude},${proposal.longitude}&z=15&output=embed`}
             className="w-full h-64 rounded"
           />
         </div>
-
-        {/* 📸 Seção 2 */}
         <div className="border p-4 rounded mt-2">
           <h2 className="font-semibold mb-3">Selfie e Documento</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Selfie */}
             <div>
               <p className="mb-2 font-medium">Selfie</p>
               <Zoom>
@@ -81,7 +95,6 @@ export default function DossierPage() {
                 />
               </Zoom>
             </div>
-            {/* Documento */}
             <div>
               <p className="mb-2 font-medium">Documento</p>
               <Zoom>
@@ -93,8 +106,6 @@ export default function DossierPage() {
               </Zoom>
             </div>
           </div>
-
-          {/* Score mock */}
           <div className="mt-4">
             <p>
               <strong>Similaridade facial:</strong> 92%
@@ -102,7 +113,7 @@ export default function DossierPage() {
           </div>
         </div>
         <div>
-          <div className="flex gap-4 mt-6">
+          <div className="flex gap-4 mt-6 justify-center w-full">
             <button
               className="bg-green-600 text-white px-4 py-2 rounded"
               onClick={() => setApproveOpen(true)}
