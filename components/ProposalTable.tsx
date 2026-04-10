@@ -6,7 +6,6 @@ import { Proposal } from "@/types/proposal";
 import { StatusBadge } from "./StatusBadge";
 import { useRouter } from "next/navigation";
 
-
 export function ProposalTable() {
     const [data, setData] = useState<Proposal[]>([]);
     const [search, setSearch] = useState("");
