@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-  ],
+,   "jest.setup.js", "jest.config.js", "components/__tests__/StatusBadge.test.jsx", "components/__tests__/ProposalTable.test.jsx"  ],
   "exclude": ["node_modules"]
 }
