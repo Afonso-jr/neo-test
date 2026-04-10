@@ -10,7 +10,9 @@ import "react-medium-image-zoom/dist/styles.css";
 export default function DossierPage() {
   const params = useParams();
   const id = params.id as string;
-
+  const [approveOpen, setApproveOpen] = useState(false);
+  const [rejectOpen, setRejectOpen] = useState(false);
+  const [reason, setReason] = useState("");
   const [proposal, setProposal] = useState<Proposal | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -87,6 +89,87 @@ export default function DossierPage() {
               <strong>Similaridade facial:</strong> 92%
             </p>
           </div>
+        </div>
+        <div>
+          <div className="flex gap-4 mt-6">
+            <button
+              className="bg-green-600 text-white px-4 py-2 rounded"
+              onClick={() => setApproveOpen(true)}
+            >
+              Aprovar
+            </button>
+
+            <button
+              className="bg-red-600 text-white px-4 py-2 rounded"
+              onClick={() => setRejectOpen(true)}
+            >
+              Reprovar
+            </button>
+          </div>
+          {approveOpen && (
+            <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
+              <div className="bg-white p-6 rounded">
+                <p  >Tem certeza que deseja aprovar?</p>
+                <div className="flex gap-2 mt-4">
+                  <button
+                    className="bg-gray-300 px-3 py-1"
+                    onClick={() => setApproveOpen(false)}
+                  >
+                    Cancelar
+                    </button>
+
+                  <button
+                    className="bg-green-600 text-white px-3 py-1"
+                    onClick={() => {
+                      alert(`Usuário ${id} foi aprovado!`);
+                      setApproveOpen(false);
+                    }}
+                  >
+                    Confirmar
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+          {rejectOpen && (
+            <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
+              <div className="bg-white p-6 rounded w-full max-w-md">
+                <p className="font-semibold">Motivo da reprovação</p>
+
+                <textarea
+                  className="border w-full mt-2 p-2"
+                  placeholder="Digite o motivo..."
+                  value={reason}
+                  onChange={(e) => setReason(e.target.value)}
+                />
+
+                <div className="flex gap-2 mt-4">
+                  <button
+                    className="bg-gray-300 px-3 py-1"
+                    onClick={() => setRejectOpen(false)}
+                  >
+                    Cancelar
+                  </button>
+
+                  <button
+                    className="bg-red-600 text-white px-3 py-1"
+                    onClick={() => {
+                      if (!reason) {
+                        alert("Informe o motivo!");
+                        return;
+                      }
+                    
+                      alert(`Usuário ${id} reprovado! Motivo: ${reason}`);
+                      setRejectOpen(false);
+                      setReason("");
+                    }}
+                  >
+                    Confirmar
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
