@@ -41,9 +41,20 @@ export default function DossierPage() {
   
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
           <p><strong>Nome:</strong> {proposal.clientName}</p>
-          <p><strong>CPF:</strong> {proposal.cpf}</p>
-          <p><strong>Data da assinatura:</strong> {new Date(proposal.signedAt).toLocaleString()}</p>
-          <p><strong>IP:</strong> {proposal.ip}</p>
+          <p className="mt-2">
+            <strong>Status:</strong> {proposal.status || "Status informado"}
+          </p>
+          <p><strong>CPF:</strong> {proposal.cpf || "Não informado"}</p>
+          <p>
+            <strong>Data da assinatura:</strong>{" "}
+              {proposal.signedAt
+                ? new Date(proposal.signedAt).toLocaleString()
+                : "Não informado"
+              }
+          </p>
+          <div>
+            <strong>IP:</strong> {proposal.ip || "Não informado"}
+          </div>
         </div>
   
         {/* 🗺️ Mapa */}
@@ -121,6 +132,11 @@ export default function DossierPage() {
                   <button
                     className="bg-green-600 text-white px-3 py-1"
                     onClick={() => {
+                      setProposal((prev) =>
+                        prev
+                          ? { ...prev, status: "SIGNED" } 
+                          : prev
+                      );
                       alert(`Usuário ${id} foi aprovado!`);
                       setApproveOpen(false);
                     }}
@@ -159,7 +175,13 @@ export default function DossierPage() {
                         return;
                       }
                     
-                      alert(`Usuário ${id} reprovado! Motivo: ${reason}`);
+                      setProposal((prev) =>
+                        prev
+                          ? { ...prev, status: "REJECTED" }
+                          : prev
+                      );
+                      
+                      alert(`Reprovado!\nMotivo: ${reason}`);
                       setRejectOpen(false);
                       setReason("");
                     }}
