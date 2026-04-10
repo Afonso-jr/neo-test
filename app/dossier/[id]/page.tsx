@@ -29,6 +29,12 @@ export default function DossierPage() {
     return <Loading isLoading={true} />;
   }
 
+  const getSimilarityColor = (score: number): string => {
+    if (score >= 85) return "text-green-600 font-bold";  
+    if (score >= 50) return "text-amber-500 font-bold";   
+    return "text-red-600 font-bold";                     
+  };
+
   if (!proposal) {
     return (
       <div className="flex flex-col justify-center items-center mt-20">
@@ -89,9 +95,9 @@ export default function DossierPage() {
               <p className="mb-2 font-medium">Selfie</p>
               <Zoom>
                 <img
-                  src="https://randomuser.me/api/portraits/men/32.jpg"
+                  src={proposal.selfieUrl}
                   alt="Selfie"
-                  className="rounded w-full max-w-xs cursor-zoom-in"
+                  className="rounded-lg w-full max-w-xs cursor-zoom-in border shadow-sm"
                 />
               </Zoom>
             </div>
@@ -99,16 +105,19 @@ export default function DossierPage() {
               <p className="mb-2 font-medium">Documento</p>
               <Zoom>
                 <img
-                  src="https://via.placeholder.com/300x200?text=Documento"
+                  src={proposal.documentoUrl}
                   alt="Documento"
-                  className="rounded w-full max-w-xs cursor-zoom-in"
+                  className="rounded-lg w-full max-w-xs cursor-zoom-in border shadow-sm"
                 />
               </Zoom>
             </div>
           </div>
           <div className="mt-4">
             <p>
-              <strong>Similaridade facial:</strong> 92%
+              <strong>Similaridade facial:</strong> 
+              <span className={`ml-1 text-2xl ${getSimilarityColor(proposal.similarityScore)}`}>
+                {proposal.similarityScore}%
+              </span>
             </p>
           </div>
         </div>

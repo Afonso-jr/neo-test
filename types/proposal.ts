@@ -16,4 +16,7 @@ export interface Proposal {
     ip: string;
     latitude: number;
     longitude: number;
+    selfieUrl: string;       
+    documentoUrl: string;    
+    similarityScore: number;
 }
