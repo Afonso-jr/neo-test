@@ -8,7 +8,7 @@ export default function Loading({ isLoading }: LoadingProps) {
         className={`fixed inset-0 z-999 ${isLoading ? "block" : "hidden"}`}
         tabIndex={-1}
       >
-        <div id="overlay" className="fixed inset-0 bg-white bg-opacity-50"></div>
+        <div id="overlay" className="fixed inset-0 bg-primary bg-opacity-50"></div>
         <div className="bg-transparent flex justify-center items-center absolute  transform shadow-lg w-full max-w-full h-full overflow-auto">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -27,7 +27,7 @@ export default function Loading({ isLoading }: LoadingProps) {
               return (
                 <g key={i} transform={`rotate(${rotation} 50 50)`}>
                   <rect
-                    fill="#2996cc"
+                    fill="#ffff"
                     height="12"
                     width="6"
                     ry="6"

@@ -19,7 +19,7 @@ export function StatusBadge({ status }: Props) {
   
     return (
         <span
-            className={`px-2 py-1 text-white text-xs rounded ${map[status as keyof typeof map]}`}
+            className={`px-2 py-1 text-white text-sm rounded ${map[status as keyof typeof map]}`}
         >
             {labels[status as keyof typeof labels]}
         </span>
