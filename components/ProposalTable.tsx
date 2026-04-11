@@ -102,7 +102,7 @@ export function ProposalTable() {
                                 <tr
                                     key={p.id}
                                     className="border-t cursor-pointer hover:bg-gray-600"
-                                    onClick={() => router.push(`/dossier/${p.id}`)}
+                                    onClick={() => router.push(`/detalhes/${p.id}`)}
                                 >
                                     <td className="p-2">{p.id}</td>
                                     <td className="p-2">{p.clientName}</td>

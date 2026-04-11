@@ -111,12 +111,12 @@ Foi criada uma camada de serviço (`api.ts`) com delay artificial para simular c
 
 ## 🔐 Variáveis de ambiente
 
-O projeto pode utilizar variáveis de ambiente via `.env.local`.
+O projeto utiliza variáveis de ambiente via `.env.local`.
 
-Exemplo:
+Para executar corretamente, crie um arquivo chamado .env.local na raiz do projeto e adicione as seguintes variáveis:
 
-```env
-NEXT_PUBLIC_API_TOKEN=seu_token_aqui
+```
+NEXT_PUBLIC_API_TOKEN=neo_token_2026_secret
 ```
 
 ---

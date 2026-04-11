@@ -41,7 +41,7 @@ export default function DossierPage() {
         <p className="text-4xl p-6">Proposta não encontrada para o ID: {id}!</p>
         <p className="text-2xl p-6">Verifique o ID do cliente ou solicite ajuda tecnica.</p>
         <Link 
-          href="/dashboard" 
+          href="/painel-financeiro" 
           className="text-blue-600 hover:text-blue-800 transition-colors w-fit"
         >
           <span>Voltar para tabela de assinaturas</span>
@@ -55,7 +55,7 @@ export default function DossierPage() {
       <div className="flex items-center flex-col">
         <h1 className="text-4xl font-bold">Dossiê da Proposta</h1>
         <Link 
-          href="/dashboard" 
+          href="/painel-financeiro" 
           className="text-white hover:text-white-400 transition-colors w-fit"
         >
           <span>Voltar</span>

@@ -1,15 +1,15 @@
 import { Proposal } from "@/types/proposal";
 
-import Img1 from "@/public/images/joão_silva_img.avif"
-import ImgDoc1 from "@/public/images/joão_silva_doc.avif"
-import Img2 from "@/public/images/maria_souza_img.avif"
-import ImgDoc2 from "@/public/images/maria_souza_doc.avif"
-import Img3 from "@/public/images/carlos_lima_img.avif"
-import ImgDoc3 from "@/public/images/carlos_lima_doc.avif"
-import Img4 from "@/public/images/ana_pereira_img.avif"
-import ImgDoc4 from "@/public/images/ana_pereira_doc.avif"
-import Img5 from "@/public/images/lucas_fernandes_img.avif"
-import ImgDoc5 from "@/public/images/lucas_fernandes_doc.avif"
+import Img1 from "@/public/images/clients_imgs/joão_silva_img.avif"
+import ImgDoc1 from "@/public/images/clients_imgs/joão_silva_doc.avif"
+import Img2 from "@/public/images/clients_imgs/maria_souza_img.avif"
+import ImgDoc2 from "@/public/images/clients_imgs/maria_souza_doc.avif"
+import Img3 from "@/public/images/clients_imgs/carlos_lima_img.avif"
+import ImgDoc3 from "@/public/images/clients_imgs/carlos_lima_doc.avif"
+import Img4 from "@/public/images/clients_imgs/ana_pereira_img.avif"
+import ImgDoc4 from "@/public/images/clients_imgs/ana_pereira_doc.avif"
+import Img5 from "@/public/images/clients_imgs/lucas_fernandes_img.avif"
+import ImgDoc5 from "@/public/images/clients_imgs/lucas_fernandes_doc.avif"
 
 export const proposals: Proposal[] = [
   {
@@ -25,7 +25,7 @@ export const proposals: Proposal[] = [
     longitude: -49.27,
     selfieUrl: Img1.src, 
     documentoUrl: ImgDoc1.src,
-    similarityScore: 95
+    similarityScore: 90
   },
   {
     id: "1002",
