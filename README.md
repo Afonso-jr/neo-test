@@ -115,9 +115,9 @@ Foi criada uma camada de serviço (`api.ts`) com delay artificial (2s) para simu
 
 ## 🔐 Variáveis de ambiente
 
-O projeto utiliza variáveis de ambiente via `.env.local`.
+O projeto utiliza variáveis de ambiente via `.env`.
 
-Para executar corretamente, crie um arquivo chamado .env.local na raiz do projeto e adicione as seguintes variáveis:
+Para executar corretamente, crie um arquivo chamado .env na raiz do projeto e adicione as seguintes variáveis:
 
 ```
 NEXT_PUBLIC_API_TOKEN=neo_token_2026_secret
@@ -131,6 +131,7 @@ Para rodar os testes, utilize:
 ```bash
 npm run test
 
+---
 ---
 
 ## 👨‍💻 Autor
