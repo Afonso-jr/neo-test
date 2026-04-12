@@ -1,11 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Proposal } from "@/types/proposal";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import Image from "next/image";
 import Link from "next/link";
+import { ConfirmationModal } from './ConfirmationModal';
+import { api } from "@/services/api";
+import Loading from "@/components/Loading";
 
 interface DossierContentProps {
     initialProposal: Proposal;
@@ -14,9 +17,15 @@ interface DossierContentProps {
 
 export function DossierContent({ initialProposal, id }: DossierContentProps) {
     const [proposal, setProposal] = useState<Proposal>(initialProposal);
-    const [approveOpen, setApproveOpen] = useState(false);
-    const [rejectOpen, setRejectOpen] = useState(false);
-    const [reason, setReason] = useState("");
+    const [modalType, setModalType] = useState<'approve' | 'reproves' | null>(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 2000);
+        
+    }, []);
 
     const labels = {
         PENDING: "Aguardando",
@@ -31,20 +40,42 @@ export function DossierContent({ initialProposal, id }: DossierContentProps) {
         return "text-red-500";
     };
 
-    // const handleApprove = async () => {
-    //     setIsLoading(true);
-    //     try {
-    //       await approveProposal(id);
-    //       alert('Proposta aprovada com sucesso!');
-    //     } catch (error) {
-    //       alert('Erro ao aprovar proposta');
-    //     } finally {
-    //       setIsLoading(false);
-    //     }
-    // };
+    const handleApprove = async () => {
+        try {
+          setLoading(true);
+          
+          const updatedProposal = await api.approveProposal(proposal.id);
+          
+          setProposal(updatedProposal);
+          
+          setModalType(null);
+          
+        } catch (error) {
+          console.error("Erro ao aprovar proposta:", error);
+        } finally {
+          setLoading(false);
+        }
+    };
+
+    const handleReprove = async (reason?: string) => {
+        try {
+          setLoading(true);
+          
+          const updatedProposal = await api.rejectProposal(proposal.id, reason);
+          
+          setProposal(updatedProposal);
+          
+          setModalType(null);
+        } catch (error) {
+          console.error("Erro ao reprovar proposta:", error);
+        } finally {
+          setLoading(false);
+        }
+    };
 
     return (
         <div className="p-6 max-w-5xl mx-auto space-y-6">
+            <Loading isLoading={loading}/>
             <div className="flex justify-between items-end border-b border-primary/10 pb-4">
                 <div>
                     <h1 className="text-3xl font-bold text-contrast">Dossiê da Proposta</h1>
@@ -100,13 +131,13 @@ export function DossierContent({ initialProposal, id }: DossierContentProps) {
                             <div className="text-center">
                                 <p className="text-xs text-contrast/50 mb-2 uppercase font-bold">Selfie do Cliente</p>
                                 <Zoom>
-                                    <Image src={proposal.selfieUrl} alt="Selfie" width={200} height={200} className="rounded-lg mx-auto border-2 border-primary/20" />
+                                    <Image loading="eager" src={proposal.selfieUrl} alt="Selfie" width={200} height={200} className="rounded-lg mx-auto border-2 border-primary/20" />
                                 </Zoom>
                             </div>
                             <div className="text-center">
                                 <p className="text-xs text-contrast/50 mb-2 uppercase font-bold">Documento (RG/CNH)</p>
                                 <Zoom>
-                                  <Image src={proposal.documentoUrl} alt="Documento" width={200} height={200} className="rounded-lg mx-auto border-2 border-primary/20" />
+                                  <Image loading="eager" src={proposal.documentoUrl} alt="Documento" width={200} height={200} className="rounded-lg mx-auto border-2 border-primary/20" />
                                 </Zoom>
                             </div>
                             <div className="pt-4 border-t border-primary/10 text-center">
@@ -127,8 +158,11 @@ export function DossierContent({ initialProposal, id }: DossierContentProps) {
                             <span className="text-red-600 text-2xl font-bold italic">✕ Reprovado</span>
                         </div>
                     )}
-
-
+                    {proposal.status === "EXPIRED" && (
+                        <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl flex items-center justify-center gap-2">
+                            <span className="text-gray-600 text-2xl font-bold italic">Expirado</span>
+                        </div>
+                    )}
                     <div className="flex gap-4 justify-center w-full">
                         <button
                             disabled={proposal.status !== "PENDING"}
@@ -137,7 +171,7 @@ export function DossierContent({ initialProposal, id }: DossierContentProps) {
                                 ? "bg-green-600 hover:bg-green-700 text-white cursor-pointer active:scale-95" 
                                 : "bg-slate-200 text-slate-400 cursor-not-allowed opacity-50"
                             }`}
-                            onClick={() => setApproveOpen(true)}
+                            onClick={() => setModalType('approve')}
                         >
                             Aprovar
                         </button>
@@ -148,10 +182,30 @@ export function DossierContent({ initialProposal, id }: DossierContentProps) {
                               ? "bg-red-600 hover:bg-red-700 text-white cursor-pointer active:scale-95" 
                               : "bg-slate-200 text-slate-400 cursor-not-allowed opacity-50"
                             }`}
-                            onClick={() => setRejectOpen(true)}
+                            onClick={() => setModalType('reproves')}
+
                         >
                             Reprovar
                         </button>
+                        <ConfirmationModal 
+                            isOpen={modalType === 'approve'}
+                            onClose={() => setModalType(null)}
+                            onConfirm={handleApprove}
+                            title="Confirmar Aprovação"
+                            description="Tem certeza que deseja aprovar esta proposta? Esta ação não pode ser desfeita."
+                            confirmText="Sim, Aprovar"
+                            variant="success"
+                        />
+                        <ConfirmationModal 
+                            isOpen={modalType === 'reproves'}
+                            onClose={() => setModalType(null)}
+                            onConfirm={handleReprove}
+                            title="Confirmar Rejeição"
+                            description="Deseja realmente rejeitar esta proposta?"
+                            confirmText="Sim, Rejeitar"
+                            variant="danger"
+                            isReasonVisible={true}
+                        />
                       </div>
                 </div>
             </div>
@@ -168,77 +222,3 @@ function DataField({ label, value }: { label: string, value: string | number }) 
         </div>
     );
 }
-
-
-// {approveOpen && (
-//     <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
-//       <div className="bg-white p-6 rounded">
-//         <p  >Tem certeza que deseja aprovar?</p>
-//         <div className="flex gap-2 mt-4">
-//           <button
-//             className="bg-gray-300 hover:bg-gray-500 cursor-pointer p-5 rounded-4xl"
-//             onClick={() => setApproveOpen(false)}
-//           >
-//             Cancelar
-//             </button>
-
-//           <button
-//             className="bg-green-600 hover:bg-green-800 cursor-pointer text-white p-5 rounded-4xl"
-//             onClick={() => {
-//               setProposal((prev) =>
-//                 prev
-//                   ? { ...prev, status: "SIGNED" } 
-//                   : prev
-//               );
-//               alert(`Usuário ${id} foi aprovado!`);
-//               setApproveOpen(false);
-//             }}
-//           >
-//             Confirmar
-//           </button>
-//         </div>
-//       </div>
-//     </div>
-//   )}
-//   {rejectOpen && (
-//     <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
-//       <div className="bg-white p-6 rounded w-full mx-4 lg:mx-0 lg:max-w-md">
-//         <p className="font-semibold text-primary">Motivo da reprovação</p>
-//         <textarea
-//           className="border w-full mt-2 p-2 text-primary"
-//           placeholder="Digite o motivo..."
-//           value={reason}
-//           onChange={(e) => setReason(e.target.value)}
-//         />
-//         <div className="flex gap-2 mt-4">
-//           <button
-//             className="bg-gray-300 hover:bg-gray-500 cursor-pointer p-5 rounded-4xl"
-//             onClick={() => setRejectOpen(false)}
-//           >
-//             Cancelar
-//           </button>
-//           <button
-//             className="bg-red-600 hover:bg-red-800 cursor-pointer text-white p-5 rounded-4xl"
-//             onClick={() => {
-//               if (!reason) {
-//                 alert("Informe o motivo!");
-//                 return;
-//               }
-            
-//               setProposal((prev) =>
-//                 prev
-//                   ? { ...prev, status: "REJECTED" }
-//                   : prev
-//               );
-              
-//               alert(`Reprovado!\nMotivo: ${reason}`);
-//               setRejectOpen(false);
-//               setReason("");
-//             }}
-//           >
-//             Confirmar
-//           </button>
-//         </div>
-//       </div>
-//     </div>
-//   )}

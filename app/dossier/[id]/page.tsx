@@ -7,14 +7,6 @@ import Link from "next/link";
 export default async function DossierPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
 
-  return (
-    <Suspense fallback={<Loading isLoading={true} />}>
-      <DossierData id={id} />
-    </Suspense>
-  );
-}
-
-async function DossierData({ id }: { id: string }) {
   const proposal = await api.getProposalById(id);
 
   if (!proposal) {

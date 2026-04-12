@@ -24,4 +24,35 @@ export const api = {
     await delay();
     return proposals.find((p) => p.id === id);
   },
+
+  approveProposal: async (id: string) => {
+    checkAuth();
+    await delay();
+    
+    const proposal = proposals.find((p) => p.id === id);
+    if (!proposal) {
+      throw new Error("Proposta não encontrada");
+    }
+    
+    proposal.status = "SIGNED";
+    proposal.signedAt = new Date().toISOString();
+    
+    return proposal;
+  },
+
+  rejectProposal: async (id: string, reason?: string) => {
+    checkAuth();
+    await delay();
+    
+    const proposal = proposals.find((p) => p.id === id);
+    if (!proposal) {
+      throw new Error("Proposta não encontrada");
+    }
+    
+    console.log(reason);
+    proposal.status = "REJECTED";
+    
+    return proposal;
+  }
+
 };

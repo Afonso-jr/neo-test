@@ -87,7 +87,7 @@ Essa abordagem facilita manutenção e evolução.
 
 ### 🔹 Simulação de API
 
-Foi criada uma camada de serviço (`api.ts`) com delay artificial para simular comportamente de espera em chamadas reais.
+Foi criada uma camada de serviço (`api.ts`) com delay artificial (2s) para simular comportamente de espera em chamadas reais.
 
 ---
 
@@ -97,13 +97,15 @@ Foi criada uma camada de serviço (`api.ts`) com delay artificial para simular c
 * Feedback visual para estados vazios
 * Hover e interações clicáveis
 * Navegação fluida entre telas
+* Aprovação e reprovação de propostas com modais de confirmação
+* Campo de motivo para reprovação com registro no console
 
 ---
 
 ## 🔧 Melhorias futuras
 
 * Implementação de WebSocket para atualização em tempo real
-* Paginação e ordenação da tabela
+* Paginação e ordenação dos dados da tabela
 * Otimizar as requisições com paginação no backend (lazy loading), evitando o carregamento de grandes volumes de dados (ex: 100 registros)
 * Integração com API real
 * Validação mais robusta no fluxo de decisão
@@ -128,8 +130,6 @@ Para rodar os testes, utilize:
 
 ```bash
 npm run test
-
----
 
 ---
 
