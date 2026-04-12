@@ -74,7 +74,7 @@ export const proposals: Proposal[] = [
   },
   {
     id: "1005",
-    clientName: "Lucas Fernandes",
+    clientName: "Lucas Fernandes De Souza Pereira Dos Santos Canalle Giorgino Algusto De Ouro e Pedra Mar Lua e sol",
     status: "SIGNED",
     updatedAt: new Date().toISOString(),
     link: "https://sign.com/1005",

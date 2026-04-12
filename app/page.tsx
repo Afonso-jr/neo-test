@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-linear-to-br from-primary/20 to-black p-6">
+    <main className="min-h-screen flex flex-col items-center justify-center bg-linear-to-br from-secundary/20 to-black p-6">
       <div className="max-w-2xl text-center space-y-8">
         <h1 className="text-5xl md:text-7xl font-extrabold text-contrast tracking-tight">
           Neo <span className="text-primary">Crédito</span>
@@ -27,7 +27,7 @@ export default function Home() {
         </div>
       </div>
 
-      <footer className="absolute bottom-8 text-contrast/40 text-sm">
+      <footer className="fixed bottom-4 text-contrast/40 text-sm">
         &copy; {new Date().getFullYear()} Neo Crédito - Área Restrita
       </footer>
     </main>

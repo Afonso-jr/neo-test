@@ -136,7 +136,7 @@ export function ProposalTable() {
                                         <span>{p.id}</span>
                                         </div>
                                     </td>
-                                    <td className="p-2 text-contrast">{p.clientName}</td>
+                                    <td className="p-2 text-contrast truncate whitespace-nowrap max-w-30"  title={p.clientName}>{p.clientName}</td>
                                     <td className="p-2 text-contrast">
                                          <StatusBadge status={p.status} />
                                     </td>
