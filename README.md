@@ -51,6 +51,7 @@ http://localhost:3000
 
 * Visualização dos dados do assinante:
   * Nome
+  * Status atualizado
   * CPF
   * IP
   * Data de assinatura
@@ -106,6 +107,7 @@ Foi criada uma camada de serviço (`api.ts`) com delay artificial para simular c
 * Otimizar as requisições com paginação no backend (lazy loading), evitando o carregamento de grandes volumes de dados (ex: 100 registros)
 * Integração com API real
 * Validação mais robusta no fluxo de decisão
+* Melhoria mobile ( Transformação de tabela em cards )
 
 ---
 
@@ -118,6 +120,16 @@ Para executar corretamente, crie um arquivo chamado .env.local na raiz do projet
 ```
 NEXT_PUBLIC_API_TOKEN=neo_token_2026_secret
 ```
+---
+
+## 🧪 Testes
+
+Para rodar os testes, utilize:
+
+```bash
+npm run test
+
+---
 
 ---
 

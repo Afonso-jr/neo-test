@@ -99,10 +99,10 @@ export function ProposalTable() {
                 <table className="w-full min-w-125 border mt-4 overflow-x-auto lg:overflow-hidden">
                     <thead>
                         <tr className="bg-gray-100 text-left">
-                            <th className="p-2 w-150 lg:w-[15%] text-primary">Número</th>
-                            <th className="p-2 w-200 lg:w-[40%] text-primary">Cliente</th>
-                            <th className="p-2 w-70 lg:w-[25%] text-primary">Status</th>
-                            <th className="p-2 w-80 lg:w-[20%] text-primary">Atualizado</th>
+                            <th className="p-2 w-150 lg:w-[15%] text-primary uppercase">Número</th>
+                            <th className="p-2 w-200 lg:w-[40%] text-primary uppercase">Cliente</th>
+                            <th className="p-2 w-70 lg:w-[25%] text-primary uppercase">Status</th>
+                            <th className="p-2 w-80 lg:w-[20%] text-primary uppercase">Atualizado</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -141,7 +141,7 @@ export function ProposalTable() {
                                          <StatusBadge status={p.status} />
                                     </td>
                                     <td className="p-2 text-contrast">
-                                        {new Date(p.updatedAt).toLocaleString()}
+                                        {new Date(p.updatedAt).toLocaleString('pt-BR')}
                                     </td>
                                 </tr>
                             ))
@@ -155,6 +155,30 @@ export function ProposalTable() {
                         }
                     </tbody>
                 </table>
+                    <div className="hidden lg:flex items-center justify-between p-4 bg-black/50 w-full gap-4">
+                        <div className="text-sm text-contrast/60 flex gap-3">
+                            Mostrando <span className="font-bold text-contrast">5</span> propostas
+                        </div>
+                        <div className="flex items-center gap-6">
+                            <span className="text-sm text-contrast/80 font-medium flex gap-3">
+                                Página <span className="text-primary">1</span> de 1
+                            </span>
+                            <div className="flex gap-2">
+                                <button 
+                                    disabled 
+                                    className="px-4 py-2 text-xs font-semibold uppercase tracking-widest border border-primary/20 rounded-lg opacity-30 cursor-not-allowed text-contrast"
+                                >
+                                    Anterior
+                                </button>
+                                <button 
+                                    disabled 
+                                    className="px-4 py-2 text-xs font-semibold uppercase tracking-widest border border-primary/20 rounded-lg opacity-30 cursor-not-allowed text-contrast"
+                                >
+                                    Próxima
+                                </button>
+                            </div>
+                        </div>
+                    </div>
             </div>
         </div>                
     );  
